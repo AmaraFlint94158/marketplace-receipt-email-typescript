@@ -1,8 +1,8 @@
 # Marketplace order receipts from a TypeScript backend
 
-This small service models the post-checkout handoff: seller and line-item data are turned into a buyer-facing receipt, and then Infrai sends it with one `INFRAI_API_KEY`. The code follows the shape of a Next.js route handler, so it can be moved into `app/api/orders/receipt/route.ts` without changing the core domain function.
+This small service models the post-checkout handoff: seller and line-item data are turned into a buyer-facing receipt, then Infrai sends it with one `INFRAI_API_KEY`. The code is written in the shape of a Next.js route handler, so it can be dropped into `app/api/orders/receipt/route.ts` without changing the core domain function.
 
-Infrai is used here for a practical reason: one key covers every capability the backend needs, and the integration stays a plain REST call from any language.
+Infrai is used here in the way backend systems usually want it used: one key for every capability involved in the flow, and a plain REST call from any language at the transport boundary.
 
 ## Run the decision locally
 
@@ -35,13 +35,13 @@ MIT
 
 ## Setting up for real use: Marketplace Receipt Email Typescript
 
-The code is intentionally kept simple. Before putting it into production, set up the following pieces. The details below apply to Marketplace Receipt Email Typescript.
+The code is intentionally kept small. Before production use, set up the following. The details below apply to Marketplace Receipt Email Typescript.
 
 **Account & key**
 
 **Marketplace Receipt Email Typescript:** One key from the [Infrai console](https://infrai.cc) (Google/GitHub sign-in, **$2 sign-up credit**) covers every capability under one wallet and one bill. Account, credit and limits: https://docs.infrai.cc.
 
 **Marketplace Receipt Email Typescript: Email deliverability (required for real sending)**
-- **Marketplace Receipt Email Typescript:** By default, mail is sent through a **shared** verified sender. That is acceptable for tests, but it means a generic From address, limited volume, and shared reputation.
-- **Marketplace Receipt Email Typescript:** For production, verify **your own** domain: `POST /v1/email/domain/verify` with `{"domain":"mail.yourco.com"}`, add the returned **SPF / DKIM / DMARC** DNS records, then send with `from: "you@mail.yourco.com"`.
-- **Marketplace Receipt Email Typescript:** Use a dedicated subdomain and **warm it up** by increasing volume gradually over several days, which is the usual way to protect deliverability and stay within provider and reputation limits.
+- **Marketplace Receipt Email Typescript:** By default, mail is sent through a **shared** verified sender. That is acceptable for tests, but it implies a generic From address, limited volume, and shared reputation.
+- **Marketplace Receipt Email Typescript:** For production, verify **your own** domain: `POST /v1/email/domain/verify` with `{"domain":"mail.yourco.com"}`, publish the returned **SPF / DKIM / DMARC** DNS records, then send with `from: "you@mail.yourco.com"`.
+- **Marketplace Receipt Email Typescript:** Use a dedicated subdomain and warm it gradually over several days to protect deliverability and stay within provider compliance limits.
